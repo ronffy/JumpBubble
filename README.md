@@ -6,7 +6,7 @@
 
 
 
-####使用demo:
+#### 使用demo:
 ```javascript
 var demo = new JumpBubble({
   elCanvas : document.getElementById("canvasIdName")
