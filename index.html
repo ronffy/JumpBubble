@@ -3,52 +3,57 @@
 <head>
 	<meta charset="UTF-8">
 	<title>登录/注册</title>
-	<style>
-	@keyframes ripple {
-	    100% {
-	        opacity: 0;
-	        transform: scale(2.5);
-	    }
-	}
-	div{
-		margin: 100px;
-		display: inline-block;
-		padding: 10px 20px;
-		background: red;
-		color: #fff;
-
-		position: relative;
-		    overflow: hidden;
-		    -webkit-user-select: none;
-		    -moz-webkit-user-select:none;
-		    -ms-user-select:none;
-	}
-	span{
-		display: block;
-		width: 100%;
-		height: 100%;
-		border-radius: 100%;
-		position: absolute;
-		top: 0;
-		left: 0;
-		z-index: 888;
-		background: rgba(255, 255, 255, .5);
-		transform: scale(0);
-		animation: ripple .6s 0s linear infinite;
-	}
-	span.f{
-		top: -82px;
-		left: 67px;
-		width: 200px;
-		height: 200px;
-		animation-duration: 1s;
-		background: rgb(255, 255, 255);
-		opacity: 0.6;
-	}
-	</style>
 </head>
 <body>
-<div>我的天哪<span class="f"></span> </div>
+<div class="root">
+	<div class="main clearfix" id="v-main" style="display:none;">
+		<!-- 登录/注册按钮组 -->
+		<div class="btnbox" id="v-btnbox">
+			<div class="btnbox-btn">
+				<div class="btnbox-cont clearfix">
+					<div class="btnbox-info info-login">
+						<h2>登录</h2>
+						<p class="mt-15 mb-20">点击输入您的用户名和账号</p>
+						<span class="btn btn-login" id="v-btn-login">登录</span>
+					</div>
+				</div>
+			</div>
+			<div class="btnbox-btn">
+				<div class="btnbox-cont clearfix">
+					<div class="btnbox-info info-signup">
+						<h2>注册</h2>
+						<p class="mt-15 mb-20">点击填写您新的用户名和账号完成注册</p>
+						<span class="btn btn-signup" id="v-btn-signup">注册</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 第一层背景图层 -->
+		<div class="imgbox fordoimg">
+			<p class="pimg"><img src="src/img/yourname.jpg"></p>
+		</div>
+		<!-- 弹出的登录/注册表单层 -->
+		<div class="modelbox fordoimg" id="v-modelbox">
+			<p class="pimg"><img src="src/img/yourname.jpg"></p>
+			<div class="modelbox-info modelbox-login hide">
+				<h2>登录</h2>
+				<input type="text" placeholder="用户名">
+				<input type="password" placeholder="密码">
+				<span class="btn btn-login mt-25">登录</span>
+			</div>
+			<div class="modelbox-info modelbox-signup hide">
+				<h2>注册</h2>
+				<input type="text" placeholder="用户名">
+				<input type="password" placeholder="密码">
+				<input type="password" placeholder="确认密码">
+				<span class="btn btn-signup mt-25">注册</span>
+			</div>
+			<div class="iconbox-return">
+				<svg t="1501208526549" id="v-icon-return" style="display: none;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2374" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="25"><defs><style type="text/css"></style></defs><path d="M557.221 181.352l-300.889 274.034h658.058c24.719 0 45.722 25.274 45.722 49.991s-22.758 57.861-47.476 57.861h-656.39l273.918 259.584c17.611 17.55 15.709 58.212-6.581 77.634-18.751 16.354-46.161 17.553-63.771 0l-380.688-355.149c-9.391-9.391-13.369-21.823-12.754-34.080-0.644-12.227 3.364-28.754 12.754-38.115l408.74-365.623c17.61-17.552 49.495-13.397 67.515 3.745 19.452 18.486 19.452 52.537 1.842 70.116z" p-id="2375" fill="#515151"></path></svg>
+			</div>
+		</div>
+	</div>
+</div>
 
 <script src="dist/bubble.js"></script>
 </body>

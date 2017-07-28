@@ -6,6 +6,7 @@
   "scripts": {
     "start-babel": "babel src -d dist -s -watch",
     "start": "webpack --display-error-details -d -w",
+    "build": "webpack --display-error-details -d -p",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
