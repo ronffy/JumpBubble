@@ -1,54 +1,55 @@
-<!DOCTYPE HTML>
-<html>
-<meta charset="utf-8">
-<meta name="renderer" content="webkit">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<title>原生js实现canvas气泡冒泡效果</title>
+﻿<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>登录/注册</title>
+	<style>
+	@keyframes ripple {
+	    100% {
+	        opacity: 0;
+	        transform: scale(2.5);
+	    }
+	}
+	div{
+		margin: 100px;
+		display: inline-block;
+		padding: 10px 20px;
+		background: red;
+		color: #fff;
+
+		position: relative;
+		    overflow: hidden;
+		    -webkit-user-select: none;
+		    -moz-webkit-user-select:none;
+		    -ms-user-select:none;
+	}
+	span{
+		display: block;
+		width: 100%;
+		height: 100%;
+		border-radius: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 888;
+		background: rgba(255, 255, 255, .5);
+		transform: scale(0);
+		animation: ripple .6s 0s linear infinite;
+	}
+	span.f{
+		top: -82px;
+		left: 67px;
+		width: 200px;
+		height: 200px;
+		animation-duration: 1s;
+		background: rgb(255, 255, 255);
+		opacity: 0.6;
+	}
+	</style>
+</head>
 <body>
-<p style="display:none">
-  <img id="img1" src="http://p8.qhimg.com/t01053ab4d4d6510abd.png" alt="">
-  <img id="img2" src="http://p5.qhimg.com/t017f9904d4be818a87.png" alt="">
-  <img id="img3" src="http://p5.qhimg.com/t015ec16e404a442dd4.png" alt="">
-  <img id="img4" src="http://p6.qhimg.com/t017895dcd6312beacb.png" alt="">
-  <img id="img5" src="http://p2.qhimg.com/t01f70bccf10e16addd.png" alt="">
-  <img id="img6" src="http://p3.qhimg.com/t016d419cab67d819ac.png" alt="">
-</p>
-<h2>小贼说：原生js实现canvas气泡冒泡效果的插件，api丰富，使用简单</h2>
-<canvas id="myCanvas" width="250" height="430" style="border:1px solid #eee">您的浏览器不支持canvas标签~</canvas>
-<canvas id="myCanvas2" width="200" height="330" style="border:1px solid #eee">您的浏览器不支持canvas标签~</canvas>
-<script src="JumpBubble.js"></script> 
-<script type="text/javascript">
-window.onload = function(){
-  // 使用demo
-  var demo = new JumpBubble({
-    elCanvas : document.getElementById("myCanvas")
-  });
-  clearInterval(setDemo1);
-  var setDemo1 = setInterval(function(){
-    var idName = "img" + Math.ceil(Math.random()*6);
-    demo.create({
-      elImg : document.getElementById(idName)
-    });
-  },150);
+<div>我的天哪<span class="f"></span> </div>
 
-  // demo2
-  var demo2 = new JumpBubble({
-    elCanvas : document.getElementById("myCanvas2"),
-    config : {
-      alpha : 0.5,
-      width : 30
-    },
-    callback : function(a,b,c){}
-  });
-  clearInterval(setDemo2);
-  var setDemo2 = setInterval(function(){
-    demo2.create({
-      elImg : document.getElementById("img1")
-    });
-  },150);
-
-}
-
-</script>
+<script src="dist/bubble.js"></script>
 </body>
-</html> 
+</html>
