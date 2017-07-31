@@ -1,15 +1,18 @@
 # coollogin
 清新别致的登录、注册页
 
-### [点我预览吧](https://wanghairong-i.github.io/coollogin/)
+### [点我预览效果吧](https://wanghairong-i.github.io/JumpBubble/)
 
 ## 介绍
 
--   webpack + es6 + less + postcss(autoprefixer) 跑项目
--   巧妙的html布局, 配合css3和js, 实现动画的登录、注册页
--   非常不错的交互体验
+-   该插件无任何依赖，纯原生js写成
+-   兼容IE9+
+-   API丰富，使用简单
+-   webpack + es6 跑项目
 
 ## how to run
+
+### ES6环境
 
 ```javascript
 
@@ -23,3 +26,7 @@ npm start
 npm run build
 
 ```
+
+### 非ES6环境
+
+在html文件中引入dist/bubble.js即可
