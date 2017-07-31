@@ -1,5 +1,6 @@
-# coollogin
-清新别致的登录、注册页
+# JumpBubble
+
+酷炫实用的态度气泡，通过canvas实现
 
 ### [点我预览效果吧](https://wanghairong-i.github.io/JumpBubble/)
 
@@ -10,7 +11,7 @@
 -   API丰富，使用简单
 -   webpack + es6 跑项目
 
-## how to run
+## 项目怎么跑起来  HOW TO RUN
 
 ### ES6环境
 
@@ -30,3 +31,13 @@ npm run build
 ### 非ES6环境
 
 在html文件中引入dist/bubble.js即可
+
+## 怎么使用 HOW TO USE
+
+```javascript
+
+const bubble = new JumpBubble(canvasNode);
+
+bubble.create(imgsrcStr);
+
+```
