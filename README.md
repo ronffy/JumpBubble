@@ -36,8 +36,11 @@ npm run build
 
 ```javascript
 
+//初始化
 const bubble = new JumpBubble(canvasNode);
 
+//调用实例的create方法，每次传入想要冒泡的图像的src即可
+//src可以是cdn地址，也可以是相对路径（相对路径是相对html文件）或绝对路径
 bubble.create(imgsrcStr);
 
 ```
