@@ -34,8 +34,31 @@ npm run build
 //初始化
 const bubble = new JumpBubble(canvasNode);
 
-//调用实例的create方法，每次传入想要冒泡的图像的src即可
+//调用实例的create方法，每次传入想要冒泡的图像的src即可，无需手动创建多余的img标签
 //src可以是cdn地址，也可以是相对路径（相对路径是相对html文件）或绝对路径
 bubble.create(imgsrcStr);
 
 ```
+
+### 实例
+
+#### html 
+(注意指定宽高)
+
+```html
+
+<canvas id="cavs" width="150" height="400" >您的浏览器不支持canvas标签~</canvas>
+
+```
+
+#### JS
+
+```javascript
+
+const bubble = new JumpBubble(cavs);
+
+bubble.create('http://p8.qhimg.com/t01053ab4d4d6510abd.png'); //此处src为cnd地址
+
+```
+
+好了，完成了，快去看看效果吧
