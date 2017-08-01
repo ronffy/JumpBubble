@@ -6,55 +6,134 @@
 */
 
 class DrawImg{
-	constructor(ctx, imgInfo, { left, top, alpha, cavHeight }){
+	constructor(ctx, imgInfo, { left, top, alpha, cavWidth, cavHeight, effect, isToAlapha, diffWidth }){
 		Object.assign(this, {
 			ctx,
 			originWidth: imgInfo.width,
 			img: imgInfo.el,
-			imgWidth: imgInfo.width - 10,
-			imgHeight: imgInfo.height - 10,
-			x: left,
-			y: top,
+			imgWidth: imgInfo.width - diffWidth, //气泡初始大小与指定气泡大小的差值
+			imgHeight: imgInfo.height - diffWidth,
+			x: left, //气泡在x轴的位置 相对左侧
+			y: top, //气泡在y轴位置 相对顶部
 			alpha,
-			cavHeight,
-			ranX: (Math.random()*5 - 2.5)/2
+			effect,
+			isToAlapha,
+			cavWidth,
+			oneUnit: cavHeight/4, //将canvan画布分成3个部分，中上、中、中下（中下占2/4,其他各占1/4）
+			toRight: (Math.random() > 0.5 ? false : true), //在气泡左右晃动效果时，该属性标识气泡是向左晃动还是向右晃动。
+			ranX: (Math.random()*2.5 - 1.25)/2, //气泡每次位移像素数
 		});
+		this.updateCtx = this.updateCtx.bind(this);
+		this.effectCommon = this.effectCommon.bind(this);
 	}
 	addCtx(){
 		const p = this, 
 				{ ctx } = p;
 		ctx.save();
 		ctx.globalAlpha = p.alpha;
-		ctx.drawImage(p.img,p.x,p.y,p.imgWidth, p.imgHeight);
+		ctx.drawImage(p.img, p.x, p.y, p.imgWidth, p.imgHeight);
 		ctx.restore();
 	}
-	updateCtx(){
+	setImgWidth(){
+		const { originWidth, imgWidth } = this;
+		if(imgWidth < originWidth){//差值diffWidth的初始小气泡，逐渐变大为指定气泡的大小
+		  this.imgWidth += 1;
+		  this.imgHeight += 1;
+		}
+	}
+	setAlapa(){
 		const p = this,
-		    	afterRoad = p.cavHeight/4,
-		    	ranX = p.ranX;
-		// 根据态度气泡在容器内到达高度不同，设置不同的速度
-		if(p.y < afterRoad){
-		  if(Math.random() > 0.5){
-		    p.x += ranX/2;
-		  }
-		  p.y -= 2.5;
+					{ y, isToAlapha, oneUnit } = this;
+		if(!isToAlapha)return false; //可自行配置，是否逐渐增加透明度
+		if(y < oneUnit){ //冒泡初始，气泡在画布中上部分时
 		  if(p.alpha <= 0.02){
 		    p.alpha = 0;
 		  }else{
 		    p.alpha -= 0.02;
 		  }
-		}else if(p.y > afterRoad && p.y < afterRoad*2){
-		  p.x += ranX/2;
-		  p.y -= 3;
+		}else if(y > oneUnit && y < oneUnit*2){ //气泡在画布的中部分时
 		  p.alpha -= 0.01;
-		}else{
+		}
+	}
+	setYpx(){
+		const p = this,
+					{ y, effect, countY, oneUnit } = p,
+					yPxs = countY(effect);
+		// 根据态度气泡在容器内到达高度不同，设置不同的速度
+		switch(true){ 
+			case y < oneUnit: //冒泡初始，气泡在画布中上部分时
+				p.y -= yPxs[0];
+				break;
+			case y > oneUnit && y < oneUnit*2: //气泡在画布的中部分时
+				p.y -= yPxs[1];
+				break;
+			default:
+				p.y -= yPxs[2];
+		}
+	}
+	setDivergeCommonX(){//分散效果，也就是非pullback晃动效果时的公共x轴设置
+		const p = this,
+					{ y, ranX, oneUnit } = p;
+		// 根据态度气泡在容器内到达高度不同，设置不同的速度
+		if(y < oneUnit){ //冒泡初始，气泡在画布中上部分时
+		  if(Math.random() > 0.5){ //气泡在画布第该单元运动时，只有一半的可能会进行x轴位移
+		    p.x += ranX/2;
+		  }
+		}else if(y > oneUnit && y < oneUnit*2){ //气泡在画布的中部分时
+		  p.x += ranX/2;
+		}else{//气泡在画布的中下部分时
 		  p.x += ranX;
-		  p.y -= 4;
 		}
-		if(p.imgWidth < p.originWidth){
-		  p.imgWidth += 1;
-		  p.imgHeight += 1;
+	}
+	easeEffect(){//在y轴上，动画以低速开始，然后加快，在结束前变慢
+		this.setDivergeCommonX();
+		this.effectCommon();
+	}
+	linearEffect(){//在y轴上，动画从头到尾的速度是相同的
+		this.setDivergeCommonX();
+		this.effectCommon();
+	}
+	pullbackEffect(){//在x轴上，触壁反弹效果，晃动的上升，
+		const p = this,
+					{ y, cavWidth, ranX, originWidth } = p,
+					_ranX = Math.abs(ranX)*2;
+		// 控制气泡左右晃动，触壁反弹效果
+		switch(true){
+			case (p.x + originWidth >= cavWidth): //气泡触右侧壁
+				p.toRight = false;
+				p.x -= _ranX;
+				break;
+			case p.x <= 2: //气泡触左侧壁
+				p.toRight = true;
+				p.x += _ranX;
+				break;
+			case p.toRight:
+				p.x += _ranX;
+				break;
+			default:
+				p.x -= _ranX;
 		}
+		this.effectCommon();
+	}
+	effectCommon(){
+		this.setYpx();
+		this.setAlapa();
+		this.setImgWidth();
+	}
+	countY(effect){//根据effect不同，设置气泡在y轴上位移距离，数组包含3个值，分别表示在y轴的3个阶段的位移距离
+		switch(effect){
+			case 'ease':
+				return [2, 3.5, 3];
+			case 'linear':
+				return [3, 3, 3];
+			case 'pullback':
+				return [1.5, 2.5, 2];
+			default:
+				return [2, 3.5, 3];
+		}
+	}
+	updateCtx(){
+		this[`${this.effect}Effect`]();
 	}
 }
 
@@ -62,26 +141,33 @@ export default class JumpBubble{
 	/*
 	** @param canvasNode   [必传] <DOM> canvan标签元素
 	** @param config       [选传] <Obj> 可选配置项
-	**    - left   <Num> 气泡距离画布左侧距离，默认在画布中间靠左15像素位置
-	**    - top    <Num> 气泡距离画布顶部距离，默认距离画布顶部为画布高度减30像素
-	**    - alpha  <Num> 气泡的透明度， 默认0.9
-	**    - width  <Num> 气泡的宽度， 默认30，为保证气泡不变形，高度随宽度改变
-	**    - effect <Str> 气泡的浮动效果（待添加）
+	**    - effect      <Str> 气泡的浮动效果,可选三个值：linear、ease、pullback，默认'ease'
+	**    - isToAlapha  <Boo> 气泡是否逐渐增加透明度 默认true
+	**    - alpha       <Num> 初始气泡的透明度， 默认0.9
+	**    - diffWidth   <Num> 初始冒泡时气泡宽度与指定宽度（width属性值）的差值，默认15，差值越大，冒泡时气泡从小变大的效果越明显
+	**    - left        <Num> 冒泡位置，距离画布左侧像素数，默认在画布中间靠左15像素位置
+	**    - top         <Num> 冒泡位置，距离画布顶部像素数，默认距离画布顶部为画布高度减30像素
+	**    - width       <Num> 气泡的宽度， 默认30，为保证气泡不变形，高度随宽度改变
 	** @param  callback    [选传] <Func> 态度气泡实例初始化后的回调
 	*/
 	constructor(canvasNode, config = {}, callback ){
-		const t = this,
-		    { width, height } = canvasNode;
 		if(!canvasNode || !canvasNode.getContext){
 		  console.warn("jumpBuffle，启用失败，canvas传参错误 或 浏览器不支持canvas");
-		  return;
+		  this.error = true;
+		  return false;
 		}
+		const t = this,
+		    { width, height } = canvasNode;
 		const _config = { //配置气泡冒泡设置
+		  width: 30, //可自定义气泡宽度，高度随宽度变化
 		  left : width/2 - 15,  //距离左侧距离
 		  top : height - 30, //距离顶部距离
 		  alpha : 0.9,  // 透明度设置
-		  cavHeight: height,  //canvan标签的高度，设置气泡在不同高度有不同的浮动速度时会用到
-		  width: 30, //可自定义气泡宽度，高度随宽度变化
+		  effect: 'ease',
+		  isToAlapha: true,
+		  diffWidth: 15, // 初始冒泡时气泡宽度与正常宽度的差值，默认15
+		  cavHeight: height,  // [非配置项] canvan标签的高度，设置气泡在不同高度有不同的浮动速度时会用到
+		  cavWidth: width,  	// [非配置项] canvan标签的高度，设置气泡在左右晃动，触壁反弹时会用到
 		};
 		Object.assign(t, {
 			canvasInfo: {
@@ -100,14 +186,20 @@ export default class JumpBubble{
 		});
 		callback && callback(t);
 	}
-	create(imgsrc, callback){
+	/*
+	** 冒泡的生命周期
+	** before: 气泡开始冒泡前
+	** after: 单个气泡消失后
+	*/
+	create(imgsrc, before, after){
 		const t = this,
-				{ bubbleArr, ctx, canvasInfo } = t,
-		    { width: imgwidth } = t.config;
-		if(!ctx){
+					{ctx, error} = t;
+		if(!ctx || error){
 		  console.warn("jumpBuffle：create时，ctx错误");
-		  return;
+		  return false;
 		}
+		const { bubbleArr, canvasInfo } = t,
+		    	{ width: imgwidth } = t.config;
 		t.createImg(imgsrc).then(imgNode => {
 			const imgInfo = {
 			  el : imgNode,
@@ -115,14 +207,13 @@ export default class JumpBubble{
 			  height : imgwidth && imgNode.height*(imgwidth/imgNode.width) || imgNode.height
 			};
 			if(bubbleArr.length>30){
-			  return false;
+			  return;
 			}
 			bubbleArr.push(new DrawImg(ctx, imgInfo, t.config));
-			//每添加一个气泡触发一次的回调函数,
-			// 参数1：canvas元素；参数2：传入的图片元素；参数3：当前存在的气泡数组
-			callback && callback(canvasInfo.canvas,imgNode,bubbleArr);  
+			//每添加一个气泡触发一次的回调函数, 生命周期为气泡开始冒泡前
+			before && before(canvasInfo.canvas, imgNode, bubbleArr);  
 			if(!t.setInter){
-			  t.setInterFn();
+			  t.setInterFn(after);
 			}
 		});
 		return this;
@@ -147,7 +238,7 @@ export default class JumpBubble{
 			}
 		})
 	}
-	setInterFn(){
+	setInterFn(after){
 		const t = this, 
 					{ ctx, canvasInfo } = t,
 		    	{ width, height } = canvasInfo;
@@ -158,6 +249,7 @@ export default class JumpBubble{
 		  	  val.addCtx();
 		  	  val.updateCtx();
 		  	  if(val.y < 10){
+		  	  	after && after();
 		  	    return false;
 		  	  }else{
 		  	    return true;

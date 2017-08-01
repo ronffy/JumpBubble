@@ -7,13 +7,12 @@
 ## 介绍
 
 -   该插件无任何依赖，纯原生js写成
+-   API丰富，使用简单，可设置多种气泡浮动效果
+-   冒泡的生命周期完善，初始化容器时，开始冒泡前、冒泡结束时等阶段都可设置回调函数
 -   兼容IE9+
--   API丰富，使用简单
 -   webpack + es6 跑项目
 
-## 项目怎么跑起来  HOW TO RUN
-
-### ES6环境
+## 项目怎么跑起来？  HOW TO RUN
 
 ```javascript
 
@@ -28,11 +27,7 @@ npm run build
 
 ```
 
-### 非ES6环境
-
-在html文件中引入dist/bubble.js即可
-
-## 怎么使用 HOW TO USE
+## 怎么使用插件？ HOW TO USE
 
 ```javascript
 
