@@ -43,10 +43,10 @@ bubble.create(imgsrcStr);
 ### 实例
 
 #### html 
-(注意指定宽高)
 
 ```html
 
+<!-- 注意指定宽高 -->
 <canvas id="cavs" width="150" height="400" >您的浏览器不支持canvas标签~</canvas>
 
 ```
