@@ -17,8 +17,9 @@ const effects = ['ease', 'linear', 'pullback'];
 for(let [i, v] of effects.entries()){
 	const bubble = new JumpBubble(document.getElementById(`cavs${i}`),{
 		effect: v,
-		left: i === 2 ? 120 : 60,
+		width: i === 0 ? 40 : 30,
 		isToAlapha: i === 1 ? false : true, //演示，第二个设置不进行透明度变化
+		left: i === 2 ? 120 : 60,
 	});
 	let s = 0;
 	setInterval(() => {
