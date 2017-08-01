@@ -55,7 +55,7 @@ bubble.create(imgsrcStr);
 
 ```javascript
 
-const bubble = new JumpBubble(cavs);
+const bubble = new JumpBubble(document.getElementById('cavs'));
 
 bubble.create('http://p8.qhimg.com/t01053ab4d4d6510abd.png'); //此处src为cnd地址
 
