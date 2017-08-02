@@ -13,13 +13,13 @@ let list2 = [
 	'http://p2.qhimg.com/t01f70bccf10e16addd.png',
 ];
 
-const effects = ['ease', 'linear', 'pullback'];
+const effects = ['ease', 'linear'];
 for(let [i, v] of effects.entries()){
 	const bubble = new JumpBubble(document.getElementById(`cavs${i}`),{
 		effect: v,
-		width: i === 0 ? 40 : 30,
-		isToAlapha: i === 1 ? false : true, //演示，第二个设置不进行透明度变化
-		left: i === 2 ? 120 : 60,
+		speed: i === 1 ? 'fast' : 'slow',
+		width: i === 0 ? 25 : 35,
+		isToAlapha: i === 0 ? false : true, //演示，第二个设置不进行透明度变化
 	});
 	let s = 0;
 	setInterval(() => {
