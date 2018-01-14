@@ -1,8 +1,11 @@
-/*
-** JumpBubble.js 原生js实现气泡冒泡效果
-** from: https://github.com/wanghairong-i/JumpBubble
-** time:2016.12.12
-*/
+/**
+ * JumpBubble.js 原生js实现气泡冒泡效果
+ * from: https://github.com/wanghairong-i/JumpBubble
+ * author: wanghairong
+ * time: 2016.12.12
+ */
+
+import styles from './jumpBubble.less'
 
 /*
 ** @param canvasNode   [必传] <DOM> canvan标签元素

@@ -1,11 +1,13 @@
-import JumpBubble from './JumpBubble'
-import '../css/index'
+import JumpBubble from './js/JumpBubble'
+import styles from './index.less'
+
+console.log(styles)
 
 let list1 = [
 	'http://p4.cdn.btime.com/t01e430315c854b44d2.png',
 	'http://p5.qhimg.com/t017f9904d4be818a87.png',
 	'http://p5.qhimg.com/t015ec16e404a442dd4.png',
-	'./src/img/fish.png', //注：路径是相对html的路径，因为该路径最终会放到img标签的src上
+	'/img/fish.png', //注：路径是相对html的路径，因为该路径最终会放到img标签的src上
 ];
 let list2 = [
 	'http://p8.qhimg.com/t01053ab4d4d6510abd.png',
