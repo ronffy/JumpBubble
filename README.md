@@ -6,12 +6,14 @@
 
 ## 介绍
 
--   该插件无任何依赖，纯原生js写成
+-   态度气泡，冒泡功能，仿直播间特效功能
 -   API丰富，使用简单，可设置气泡的大小、气泡浮动效果、位置等多种自定义效果
--   创建态度气泡时，你只需关心数据，即用于创建气泡的src路径或cnd地址，无需手动创建img标签，JumpBubble会帮你生成为指定大小表情
--   冒泡的生命周期完善，初始化容器时，开始冒泡前、冒泡结束时等阶段都可设置回调函数
+-   创建态度气泡时，你只需关心数据，即用于创建气泡的src的相对或绝对路径或cnd地址，无需手动创建img标签，JumpBubble会帮你生成为指定大小表情
+-   冒泡的生命周期完善
 -   兼容IE9+
--   webpack + es6 跑项目
+-   webpack + ES6 跑项目
+
+-   目前master是第二版，而v1版本是原生JS写的，无需任何依赖和webpack环境，如需可[查看](https://github.com/wanghairong-i/JumpBubble/tree/v1)
 
 ## 项目怎么跑起来？  HOW TO RUN
 
@@ -58,7 +60,7 @@ bubble.create(imgsrcStr);
 
 const bubble = new JumpBubble(document.getElementById('cavs'));
 
-bubble.create('http://p8.qhimg.com/t01053ab4d4d6510abd.png'); //此处src为cnd地址
+bubble.create('http://p8.qhimg.com/t01053ab4d4d6510abd.png'); //此处src为cnd地址(亦可以为本地的相对或绝对路径)
 
 ```
 
