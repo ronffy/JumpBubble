@@ -1,6 +1,6 @@
 # JumpBubble
 
-酷炫实用的态度气泡，通过`canvas`实现
+酷炫实用的态度气泡，通过canvas实现
 
 ### [点我预览效果吧](https://wanghairong-i.github.io/JumpBubble/)
 
