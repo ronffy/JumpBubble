@@ -2,7 +2,7 @@
 
 酷炫实用的态度气泡，通过canvas实现
 
-### [点我预览效果吧](https://wanghairong-i.github.io/JumpBubble/)
+### [点我预览效果吧](https://hironi.github.io/JumpBubble/)
 
 ## 介绍
 
@@ -13,7 +13,7 @@
 -   兼容IE9+
 -   webpack + ES6 跑项目
 
--   目前master是第二版，而v1版本是原生JS写的，无需任何依赖和webpack环境，如需可[查看](https://github.com/wanghairong-i/JumpBubble/tree/v1)
+-   目前master是第二版，而v1版本是原生JS写的，无需任何依赖和webpack环境，如需可[查看](https://github.com/hironi/JumpBubble/tree/v1)
 
 ## 项目怎么跑起来？  HOW TO RUN
 
