@@ -2,8 +2,6 @@
 
 酷炫实用的态度气泡，通过canvas实现
 
-### [点我预览效果吧](https://hironi.github.io/JumpBubble/)
-
 ## 介绍
 
 -   态度气泡，冒泡功能，仿直播间特效功能
