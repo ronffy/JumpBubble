@@ -29,7 +29,7 @@
     "uglify-es": "git://github.com/mishoo/UglifyJS2#harmony",
     "uglifyjs-webpack-plugin": "^1.1.6",
     "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.11.0"
+    "webpack-dev-server": "^3.1.11"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0"
